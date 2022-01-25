@@ -6,10 +6,18 @@
  * 3. Déployez sur votre serveur et testez !
  */
 
-$from = '';
-$to = '';
+$from = 'coquelet.samuel@gmail.com';
+$to = 'coquelet.samuel@gmail.com';
 $message = 'Hello World, sending a simple mail !';
 // TODO Votre code ici.
+
+$message = "voila mon grand message haaaaaaaa aaaaaaaaaa aaaaaaaa aaaaaaaaaaa aaaaaaaaa aaaaaa aaaaaaaaa aaaaa aaaaaa aaa aaaaa";
+$messageCouper = wordwrap($message, 70, "\r\n");
+$headers = array(
+    "Reply-To" => "coquelet.samuel@gmail.com",
+    "X-Mailer" => "PHP/".phpversion()
+);
+mail($to, 'test', $messageCouper,$headers, "-f coquelet.samuel@gmail.com");
 
 
 /**
@@ -24,3 +32,15 @@ $message = 'Hello World, sending a simple mail !';
  *     N'écrasez pas les valeurs déjà existantes ( s'il y en a ).
  */
 // TODO Votre code ici.
+
+
+if (isset($_GET['e'])){
+    echo "Une erreur est survenue lors de l'envoie du mail.";
+}
+elseif (isset($_GET ['s'])){
+    echo "Le message a bien été envoyé. Merci.";
+}
+
+$file = fopen("mails.txt", "a+b");
+fwrite($file, "message : ".$message."., to :".$to."\n");
+fclose($file);
